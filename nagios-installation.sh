@@ -2,8 +2,8 @@
 
 # Check if system type is ubuntu
 SYSTEM=$(uname -a)
-
-if grep -iq ubuntu <<<$SYSTEM; then
+grep -iq ubuntu <<<$SYSTEM
+if [ $? -ne 0 ]; then
     echo "This script can run safely only on Ubuntu systems."
     exit 1
 fi
