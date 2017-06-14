@@ -75,7 +75,6 @@ service xinetd restart
 
 # Nagios is now installed, we need to configure it.
 
-vi /usr/local/nagios/etc/nagios.cfg
 cat /usr/local/nagios/etc/nagios.cfg | sed "s/#\(cfg_dir=\/usr\/local\/nagios\/etc\/servers\)/\1/" | tee /usr/local/nagios/etc/nagios.cfg
 
 mkdir /usr/local/nagios/etc/servers
