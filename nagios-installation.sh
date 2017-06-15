@@ -77,10 +77,16 @@ service xinetd restart
 
 cat /usr/local/nagios/etc/nagios.cfg | sed "s/#\(cfg_dir=\/usr\/local\/nagios\/etc\/servers\)/\1/" | tee /usr/local/nagios/etc/nagios.cfg
 
-mkdir /usr/local/nagios/etc/servers
+if [ -d /usr/local/nagios/etc/servers ]; then
+    echo "Directory /usr/local/nagios/etc/servers already exists"
+else
+    mkdir /usr/local/nagios/etc/servers
+fi
 
 # TODO: parametrize admin email contact
 ADMIN_EMAIL="federico@emailchef.com"
 cat /usr/local/nagios/etc/objects/contacts.cfg | sed "s/\(^.*email\s*\)nagios@localhost\(.*$\)/\1$ADMIN_EMAIL\2/" | tee /usr/local/nagios/etc/objects/contacts.cfg
 
-printf "\ndefine command{\n    command_name check_nrpe\n    command_line \$USER1$/check_nrpe -H \$HOSTADDRESS$ -c \$ARG1$\n}" > /usr/local/nagios/etc/objects/commands.cfg 
+printf "\ndefine command{\n    command_name check_nrpe\n    command_line \$USER1$/check_nrpe -H \$HOSTADDRESS$ -c \$ARG1$\n}" >> /usr/local/nagios/etc/objects/commands.cfg
+
+ 
